@@ -1,0 +1,29 @@
+
+ .full-height {
+  height: 100vh;
+  overflow-y:auto;
+
+}
+
+.padded {
+  padding: 10px;
+}
+
+.with-icon {
+  display: flex;
+  align-items: center;
+  
+}
+.active-link{
+  background-color: white;
+}
+#logout:hover{
+  cursor: pointer;
+  
+}
+.sideNavItem:hover{
+  background-color: #cccccc;
+}
+.addFontSize{
+  font-size: 20px;
+}

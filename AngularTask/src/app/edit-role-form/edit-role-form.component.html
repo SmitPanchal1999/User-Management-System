@@ -1,0 +1,82 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container">
+    <mat-card>
+        <form [formGroup]="newRoleForm" (ngSubmit)="onSubmit()">
+            <h2>Edit Role</h2>
+            <mat-form-field appearance="fill">
+                <mat-label>Role Name</mat-label>
+                <input matInput formControlName="roleName" required disabled>
+                <mat-hint>Role name cannot be changed once it has been created.</mat-hint>
+            </mat-form-field>
+            <br><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput></textarea>
+            </mat-form-field>
+
+            <div formArrayName="modules">
+                <div *ngFor="let module of modules().controls; let i=index" [formGroupName]="i" style="margin-top:20px">
+                    <mat-card>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Module Name</mat-label>
+                            <input matInput formControlName="moduleName" required>
+                        </mat-form-field>
+                        <br>
+                        <button type="button" style="margin-bottom: 10px;" class="btn btn-primary"
+                            (click)="addPrivilege(i)">Add Module Privileges</button>
+                        <div formArrayName="privileges">
+                            <div *ngFor="let p of privileges(i).controls; let j=index" [formGroupName]="j">
+                                <mat-form-field class="example-chip-list">
+                                    <mat-label>Pattern(s)</mat-label>
+                                    <mat-chip-list #chipList formControlName="pattern">
+                                        <mat-chip
+                                            *ngFor="let pattern of newRoleForm.value.modules[i].privileges[j].pattern"
+                                            [selectable]="selectable" [removable]="true"
+                                            (removed)="removePattern(pattern,i,j)">
+                                            {{pattern}}
+                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                        </mat-chip>
+                                        <input required placeholder="New Pattern..." [matChipInputFor]="chipList"
+                                            [matChipInputAddOnBlur]="addOnBlur"
+                                            (matChipInputTokenEnd)="addPattern($event,i,j)">
+                                    </mat-chip-list>
+                                    <mat-hint style="margin-top: 2%;margin-bottom: 2%;">Select one or more tables. You can also use patterns, e.g. txn.*</mat-hint>
+                                </mat-form-field>
+                                <mat-form-field style="margin-left: 20%;">
+                                    <mat-label>Privileges</mat-label>
+                                    <mat-select formControlName="privilege" multiple>
+                                        <mat-select-trigger>
+                                            <mat-chip-list>
+                                                <mat-chip
+                                                    *ngFor="let p of newRoleForm.value.modules[i].privileges[j].privilege"
+                                                    [removable]="true" (removed)="onRoleRemoved(p,i,j)">
+
+                                                    {{ p }}
+                                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                                </mat-chip>
+                                            </mat-chip-list>
+                                        </mat-select-trigger>
+                                        <mat-option *ngFor="let p of privilegesList" [value]="p">{{p}}</mat-option>
+                                    </mat-select>
+                                    <mat-hint>Select one or more Privileges.</mat-hint>
+                                </mat-form-field>
+                                <button style="margin-left: 2%;" *ngIf="j!==0"
+                                    style="background-color: transparent;border: none;"
+                                    (click)=" removePrivilege(i,j)"><i style="font-size: 25px;color: red;"
+                                        class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
+                            <button type="button" class="btn btn-danger" (click)=" removeModule(i)">Remove
+                                Module</button>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+            <br> <button type="button" style="margin-top:20px" class="btn btn-primary" (click)="addModule()">Add
+                Module</button>
+
+            <p id="passNotMatch" style="color: red;"></p>
+            <button type="submit" class="btn btn-success" [disabled]="newRoleForm.invalid">Submit</button>
+            <a routerLink="/roles"><button class="btn btn-light" style="margin-left: 20px;">Cancel</button></a>
+        </form>
+    </mat-card>
+</div>

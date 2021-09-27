@@ -1,0 +1,24 @@
+<div class="container-fluid" style="height: 100vh;">
+<div  class="container text-center" style="padding-top: 10%;">
+  <mat-card>
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" formControlName="email">
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hidePassword  ? 'password' : 'text'" formControlName="password">
+        <button class="btn-xs" mat-icon-button matSuffix (click)="hidePassword = !hidePassword "
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword ">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="formControls.password.invalid">Password must contain atleast 4 characters</mat-error>
+      </mat-form-field><br><br>
+      <button class="btn btn-success" [disabled]="loginForm.invalid" type="submit">Submit</button>
+    </form>
+  </mat-card>
+</div></div>

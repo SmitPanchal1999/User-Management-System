@@ -1,0 +1,15 @@
+<div class="d-flex">
+    <div *ngIf="showEdit">
+    <p><i style="font-size: 20px;" class="fas fa-pencil-alt" aria-hidden="true"
+            (click)="editData() ;$event.stopPropagation();"></i></p>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    
+    <p><i style="font-size: 20px;" class="fa fa-eye" aria-hidden="true"></i></p>
+    &nbsp;&nbsp;
+    
+    <div *ngIf="showDelete">
+    <p><i style="font-size: 20px;" class="fa fa-trash" aria-hidden="true"
+            (click)="deleteData();$event.stopPropagation();"></i></p>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container">
+  <mat-card>
+    <form [formGroup]="newUserForm" (ngSubmit)="onSubmit()">
+      <h2>Edit User</h2>
+      <mat-form-field appearance="fill">
+        <mat-label>User Name</mat-label>
+        <input matInput formControlName="username" required>
+      </mat-form-field>
+      <br>
+      <div class="d-flex ">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" required>
+        </mat-form-field>
+        <mat-form-field style="margin-left: 20%;" appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastname" required>
+        </mat-form-field>
+      </div><br>
+
+      <div class="d-flex">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hidePassword  ? 'password' : 'text'" formControlName="password" required>
+          <button type="button" class="btn-xs" mat-icon-button matSuffix (click)="hidePassword = !hidePassword "
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword ">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="password.invalid">Password must contain atleast 4 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="margin-left: 20%;">
+          <mat-label>Confirm password</mat-label>
+          <input matInput [type]="hideConfirm? 'password' : 'text'" formControlName="confirmpassword" required>
+          <button type="button" class="btn-sm" mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirm">
+            <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="confirmpassword.invalid">Password must contain atleast 4 characters</mat-error>
+        </mat-form-field>
+      </div>
+      <br>
+      <div class="example-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" formControlName="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-label>Roles</mat-label>
+        <mat-select [formControl]="rolesControl" multiple>
+          <mat-select-trigger>
+            <mat-chip-list>
+              <mat-chip *ngFor="let role of rolesControl.value" [removable]="true" (removed)="onRoleRemoved(role)">
+                {{ role }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-select-trigger>
+          <mat-option *ngFor="let role of roleList" [value]="role">{{role}}</mat-option>
+        </mat-select>
+      </mat-form-field><br>
+      <mat-label>Status:&nbsp;&nbsp;</mat-label>
+      <mat-radio-group aria-label="Select an option" formControlName="status">
+        <mat-radio-button value="active">Active&nbsp;&nbsp;</mat-radio-button>
+        <mat-radio-button value="deactive">Deactive</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="status.invalid">Please select the Status</mat-error>
+      <p id="passNotMatch" style="color: red;"></p>
+      <button class="btn btn-success" [disabled]="newUserForm.invalid" type="submit">Submit</button>
+      <a routerLink="/users"><button class="btn btn-light" style="margin-left: 20px;">Cancel</button></a>
+    </form>
+  </mat-card>
+</div>

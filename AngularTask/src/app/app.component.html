@@ -1,0 +1,4 @@
+<app-sidebar *ngIf="admin && loggedIn"></app-sidebar>
+<app-sidebar-for-user *ngIf="!admin && loggedIn"></app-sidebar-for-user>
+
+<router-outlet></router-outlet>

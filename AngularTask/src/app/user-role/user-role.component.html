@@ -1,0 +1,25 @@
+<app-breadcrumb></app-breadcrumb>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Roles</h2>
+    <button class="btn btn-primary" (click)="createNewRole()">Create New Role</button>
+  </div>
+  <!-- <mat-form-field style="width: 100%;">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+  </mat-form-field> -->
+  <ag-grid-angular style="width: 100%;" #agGrid class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
+    rowSelection="multiple" [pagination]="true" [paginationPageSize]="paginationPageSize" [enableRangeSelection]="true"
+    [enableBrowserTooltips]="true" (gridReady)="onGridReady($event)" [domLayout]="domLayout">
+  </ag-grid-angular>
+  <div>
+    Page Size:
+    <select (change)="onPageSizeChanged()" id="page-size">
+      <option value="5" selected="">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+    </select>
+  </div>
+</div>

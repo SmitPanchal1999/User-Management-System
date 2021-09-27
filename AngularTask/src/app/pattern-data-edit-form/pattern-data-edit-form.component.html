@@ -1,0 +1,28 @@
+<div class="container">
+    <mat-card>
+      <form [formGroup]="editDataForm" (ngSubmit)="onSubmit()">
+        <h2>Edit User</h2>
+        <mat-form-field appearance="fill">
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="username" required>
+        </mat-form-field>
+        <br>
+        <div class="example-container">
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="pat@example.com" formControlName="email" required>
+              <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="fill">
+            <mat-label>Website</mat-label>
+            <input matInput formControlName="website" required>
+          </mat-form-field>
+    
+    <br>
+    
+    <button class="btn btn-success" [disabled]="editDataForm.invalid" type="submit">Submit</button>
+    <button type="button" class="btn btn-light" style="margin-left: 20px;" (click)="cancel()">Cancel</button>
+</form>
+</mat-card>
+</div>
